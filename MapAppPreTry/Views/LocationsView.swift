@@ -13,6 +13,10 @@ struct LocationsView: View {
                 header
                     .padding()
                 Spacer()
+
+                LocationPreviewView(location: vm.locations[0])
+                    .padding(.horizontal)
+                    .padding(.bottom, 20)
             }
         }
     }
