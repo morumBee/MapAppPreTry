@@ -1,3 +1,4 @@
+import MapKit
 import SwiftUI
 
 struct LocationsView: View {
@@ -5,19 +6,16 @@ struct LocationsView: View {
     @State var isListExpanded: Bool = false
 
     var body: some View {
+        @Bindable var vm = vm
         ZStack {
-            Color.teal
-                .ignoresSafeArea(edges: .all)
+            Map(position: $vm.mapRegion) {}
 
-            VStack(spacing: 0) {
-                header
-                    .padding()
-                Spacer()
-
-                LocationPreviewView(location: vm.locations[0])
-                    .padding(.horizontal)
-                    .padding(.bottom, 20)
-            }
+//            VStack(spacing: 0) {
+//                header
+//                    .padding()
+//                Spacer()
+//                locationsPreviewStack
+//            }
         }
     }
 }
@@ -26,6 +24,8 @@ struct LocationsView: View {
     LocationsView()
         .environment(LocationsViewModel())
 }
+
+// MARK: - header
 
 extension LocationsView {
     private var header: some View {
@@ -43,7 +43,8 @@ extension LocationsView {
                             .rotationEffect(.degrees(isListExpanded ? 90 : 0))
 
                         Spacer()
-                        Text("Pantheon, Rome")
+                        // TODO: hardcoding .name need connect with live data
+                        Text(vm.locations[0].name)
                             .font(.title3)
                             .fontWeight(.black)
                         Spacer()
@@ -73,10 +74,45 @@ extension LocationsView {
     }
 }
 
+// MARK: - locationsPreviewStack
+
 extension LocationsView {
     private var locationsPreviewStack: some View {
-        VStack{
-            
+        VStack {
+            ZStack(alignment: .bottom) {
+                RoundedRectangle(cornerRadius: 7, style: .continuous)
+                    .foregroundStyle(Color(#colorLiteral(red: 0.8953682184, green: 0.8953682184, blue: 0.8953682184, alpha: 1)))
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 135)
+                HStack(alignment: .bottom) {
+                    // TODO: hardcoding .location need connect with live data
+                    LocationPreviewView(location: vm.locations[0])
+                    Spacer()
+                    VStack {
+                        Button {}
+                            label: {
+                                Text("Learn more")
+                                    .foregroundStyle(.white)
+                                    .frame(width: 130, height: 45)
+                                    .background(.red)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                            }
+                        Button {}
+                            label: {
+                                Text("Next")
+                                    .foregroundStyle(.red)
+                                    .frame(width: 130, height: 45)
+                                    .background(Color.gray.opacity(0.5))
+                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                            }
+                    }
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                }
+                .padding(18)
+            }
         }
+        .padding()
+        .padding(.bottom, 10)
     }
 }

@@ -1,13 +1,35 @@
-//
-//  LocationsViewModel.swift
-//  MapAppPreTry
-//
-//  Created by Morumbi on 3/19/25.
-//
-
 import Foundation
+import MapKit
+import SwiftUI
 
 @Observable
 class LocationsViewModel {
-    var locations: [Location] = LocationsDataService.locations
+    var locations: [Location]
+
+    var mapLocation: Location {
+        didSet {
+            updateMapRegion(location: mapLocation)
+        }
+    }
+
+    var mapRegion: MapCameraPosition = .region(MKCoordinateRegion())
+
+    let mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+
+    init() {
+        let locations = LocationsDataService.locations
+        self.locations = locations
+        self.mapLocation = locations.first!
+    }
+
+    private func updateMapRegion(location: Location) {
+        withAnimation(.easeInOut) {
+            self.mapRegion = .region(
+                MKCoordinateRegion(
+                    center: location.coordinates,
+                    span: self.mapSpan
+                )
+            )
+        }
+    }
 }
