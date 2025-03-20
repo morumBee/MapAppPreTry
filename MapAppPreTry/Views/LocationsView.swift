@@ -73,4 +73,10 @@ extension LocationsView {
     }
 }
 
-
+extension LocationsView {
+    private var locationsPreviewStack: some View {
+        VStack{
+            
+        }
+    }
+}
