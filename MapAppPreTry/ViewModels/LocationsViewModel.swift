@@ -20,11 +20,12 @@ class LocationsViewModel {
         let locations = LocationsDataService.locations
         self.locations = locations
         self.mapLocation = locations.first!
+        updateMapRegion(location: locations.first!)
     }
 
     private func updateMapRegion(location: Location) {
         withAnimation(.easeInOut) {
-            self.mapRegion = .region(
+            mapRegion = .region(
                 MKCoordinateRegion(
                     center: location.coordinates,
                     span: self.mapSpan

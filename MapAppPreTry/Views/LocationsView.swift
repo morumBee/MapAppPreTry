@@ -8,14 +8,14 @@ struct LocationsView: View {
     var body: some View {
         @Bindable var vm = vm
         ZStack {
-            Map(position: $vm.mapRegion) {}
+            Map(position: $vm.mapRegion)
 
-//            VStack(spacing: 0) {
-//                header
-//                    .padding()
-//                Spacer()
-//                locationsPreviewStack
-//            }
+            VStack(spacing: 0) {
+                header
+                    .padding()
+                Spacer()
+                locationsPreviewStack
+            }
         }
     }
 }
@@ -43,8 +43,7 @@ extension LocationsView {
                             .rotationEffect(.degrees(isListExpanded ? 90 : 0))
 
                         Spacer()
-                        // TODO: hardcoding .name need connect with live data
-                        Text(vm.locations[0].name)
+                        Text("\(vm.mapLocation.name), \(vm.mapLocation.cityName)")
                             .font(.title3)
                             .fontWeight(.black)
                         Spacer()
@@ -85,8 +84,7 @@ extension LocationsView {
                     .frame(maxWidth: .infinity)
                     .frame(height: 135)
                 HStack(alignment: .bottom) {
-                    // TODO: hardcoding .location need connect with live data
-                    LocationPreviewView(location: vm.locations[0])
+                    LocationPreviewView(location: vm.mapLocation)
                     Spacer()
                     VStack {
                         Button {}
