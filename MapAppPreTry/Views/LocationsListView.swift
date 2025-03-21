@@ -4,9 +4,13 @@ struct LocationsListView: View {
     @Environment(LocationsViewModel.self) var vm
     var body: some View {
         List(vm.locations) { location in
-            listRowView(location)
-                .padding(.vertical, 4)
-                .listRowBackground(Color.clear)
+            Button {
+                vm.showNextLocation(location: location)
+            } label: {
+                listRowView(location: location)
+            }
+            .padding(.vertical, 4)
+            .listRowBackground(Color.clear)
         }
         .listStyle(.plain)
     }
@@ -18,7 +22,7 @@ struct LocationsListView: View {
 }
 
 extension LocationsListView {
-    private func listRowView(_ location: Location) -> some View {
+    private func listRowView(location: Location) -> some View {
         HStack {
             Image(location.imageNames[0])
                 .resizable()

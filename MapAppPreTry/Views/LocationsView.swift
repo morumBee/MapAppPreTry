@@ -34,6 +34,7 @@ extension LocationsView {
                     .font(.title2)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity)
+                    .animation(.none, value: vm.mapLocation)
                     .padding()
                     .overlay(alignment: .leading) {
                         Image(systemName: "chevron.right.circle")
