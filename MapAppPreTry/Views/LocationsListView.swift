@@ -1,8 +1,24 @@
 import SwiftUI
 
 struct LocationsListView: View {
-    var location: Location
+    @Environment(LocationsViewModel.self) var vm
     var body: some View {
+        List(vm.locations) { location in
+            listRowView(location)
+                .padding(.vertical, 4)
+                .listRowBackground(Color.clear)
+        }
+        .listStyle(.plain)
+    }
+}
+
+#Preview {
+    LocationsListView()
+        .environment(LocationsViewModel())
+}
+
+extension LocationsListView {
+    private func listRowView(_ location: Location) -> some View {
         HStack {
             Image(location.imageNames[0])
                 .resizable()
@@ -15,12 +31,6 @@ struct LocationsListView: View {
                 Text(location.cityName)
                     .font(.subheadline)
             }
-            Spacer()
         }
-        .frame(maxWidth: .infinity)
     }
-}
-
-#Preview {
-    LocationsListView(location: LocationsViewModel().locations[0])
 }

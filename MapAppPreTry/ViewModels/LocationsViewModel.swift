@@ -5,7 +5,6 @@ import SwiftUI
 @Observable
 class LocationsViewModel {
     var locations: [Location]
-
     var mapLocation: Location {
         didSet {
             updateMapRegion(location: mapLocation)
@@ -13,8 +12,9 @@ class LocationsViewModel {
     }
 
     var mapRegion: MapCameraPosition = .region(MKCoordinateRegion())
-
     let mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+
+    var showLocationsList: Bool = false
 
     init() {
         let locations = LocationsDataService.locations
@@ -31,6 +31,12 @@ class LocationsViewModel {
                     span: self.mapSpan
                 )
             )
+        }
+    }
+
+    func toggleLocationsList() {
+        withAnimation(.easeInOut) {
+            showLocationsList.toggle()
         }
     }
 }
