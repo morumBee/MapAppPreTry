@@ -66,12 +66,14 @@ extension LocationPreviewView {
     }
 
     private var nextButton: some View {
-        Button {}
-            label: {
-                Text("Next")
-                    .font(.headline)
-                    .frame(width: 100, height: 35)
-            }
-            .buttonStyle(.bordered)
+        Button {
+            vm.nextButtonPressed()
+        }
+        label: {
+            Text("Next")
+                .font(.headline)
+                .frame(width: 100, height: 35)
+        }
+        .buttonStyle(.bordered)
     }
 }
