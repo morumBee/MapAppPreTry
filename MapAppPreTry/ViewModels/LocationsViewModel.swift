@@ -46,4 +46,12 @@ class LocationsViewModel {
             showLocationsList = false
         }
     }
+
+    func nextButtonPressed(location: Location) {
+        if let idx = locations.firstIndex(of: location) {
+            withAnimation(.easeInOut) {
+                mapLocation = locations[(idx + 1) % locations.count]
+            }
+        }
+    }
 }
