@@ -14,6 +14,20 @@ struct LocationsView: View {
                 header
                     .padding()
                 Spacer()
+
+                ZStack {
+                    ForEach(vm.locations) { location in
+                        if vm.mapLocation == location {
+                            LocationPreviewView(location: location)
+                                .shadow(color: .black.opacity(0.3), radius: 20)
+                                .padding()
+                                .transition(
+                                    .asymmetric(
+                                        insertion: .move(edge: .trailing),
+                                        removal: .move(edge: .leading)))
+                        }
+                    }
+                }
             }
         }
     }
@@ -54,7 +68,6 @@ extension LocationsView {
         .background(.thickMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 15)
-
     }
 }
 
