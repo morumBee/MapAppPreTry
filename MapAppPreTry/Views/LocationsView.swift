@@ -24,9 +24,7 @@ struct LocationsView: View {
                                 .transition(
                                     .asymmetric(
                                         insertion: .move(edge: .trailing),
-                                        removal: .move(edge: .leading)
-                                    )
-                                )
+                                        removal: .move(edge: .leading)))
                         }
                     }
                 }

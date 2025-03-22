@@ -28,6 +28,7 @@ struct LocationPreviewView: View {
 
 #Preview {
     LocationPreviewView(location: LocationsViewModel().locations[0])
+        .environment(LocationsViewModel())
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.teal)
 }
@@ -65,14 +66,12 @@ extension LocationPreviewView {
     }
 
     private var nextButton: some View {
-        Button {
-            vm.nextButtonPressed(location: location)
-        }
-        label: {
-            Text("Next")
-                .font(.headline)
-                .frame(width: 100, height: 35)
-        }
-        .buttonStyle(.bordered)
+        Button {}
+            label: {
+                Text("Next")
+                    .font(.headline)
+                    .frame(width: 100, height: 35)
+            }
+            .buttonStyle(.bordered)
     }
 }
