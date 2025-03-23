@@ -6,6 +6,7 @@ struct LocationsView: View {
     @State var isListExpanded: Bool = true
 
     var body: some View {
+        @Bindable var vm = vm
         ZStack {
             mapLayer
             VStack(spacing: 0) {
@@ -15,6 +16,9 @@ struct LocationsView: View {
 
                 locationsPreviewStack
             }
+        }
+        .sheet(isPresented: $vm.showLearnMoreSheet) {
+            LocationDetailView()
         }
     }
 }
