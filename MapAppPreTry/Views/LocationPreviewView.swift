@@ -56,13 +56,15 @@ extension LocationPreviewView {
     }
 
     private var learnButton: some View {
-        Button {}
-            label: {
-                Text("Learn More")
-                    .font(.headline)
-                    .frame(width: 100, height: 35)
-            }
-            .buttonStyle(.borderedProminent)
+        Button {
+            vm.toggleLearnMoreSheet()
+        }
+        label: {
+            Text("Learn More")
+                .font(.headline)
+                .frame(width: 100, height: 35)
+        }
+        .buttonStyle(.borderedProminent)
     }
 
     private var nextButton: some View {

@@ -15,6 +15,7 @@ class LocationsViewModel {
     let mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
     
     var showLocationsList: Bool = false
+    var showLearnMoreSheet: Bool = false
     
     init() {
         let locations = LocationsDataService.locations
@@ -38,6 +39,10 @@ class LocationsViewModel {
         withAnimation(.easeInOut) {
             showLocationsList.toggle()
         }
+    }
+    
+    func toggleLearnMoreSheet() {
+        showLearnMoreSheet.toggle()
     }
     
     func showNextLocation(location: Location) {
