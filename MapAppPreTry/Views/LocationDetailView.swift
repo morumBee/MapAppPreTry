@@ -79,7 +79,16 @@ extension LocationDetailView {
     }
 
     private var mapLayer: some View {
-        Map(position: .constant(vm.mapRegion)) {
+        Map(position:
+            .constant(
+                .region(
+                    MKCoordinateRegion(
+                        center: vm.mapLocation.coordinates,
+                        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                    )
+                )
+            )
+        ) {
             Annotation(vm.mapLocation.name, coordinate: vm.mapLocation.coordinates) {
                 LocationMapAnnotationView()
             }
