@@ -6,31 +6,14 @@ struct LocationsView: View {
     @State var isListExpanded: Bool = true
 
     var body: some View {
-        @Bindable var vm = vm
         ZStack {
-            Map(position: $vm.mapRegion) {
-                ForEach(vm.locations) { location in
-                    Marker(location.name, coordinate: location.coordinates)
-                }
-            }
+            mapLayer
             VStack(spacing: 0) {
                 header
                     .padding()
                 Spacer()
 
-                ZStack {
-                    ForEach(vm.locations) { location in
-                        if vm.mapLocation == location {
-                            LocationPreviewView(location: location)
-                                .shadow(color: .black.opacity(0.3), radius: 20)
-                                .padding()
-                                .transition(
-                                    .asymmetric(
-                                        insertion: .move(edge: .trailing),
-                                        removal: .move(edge: .leading)))
-                        }
-                    }
-                }
+                locationsPreviewStack
             }
         }
     }
@@ -41,9 +24,23 @@ struct LocationsView: View {
         .environment(LocationsViewModel())
 }
 
-// MARK: - header
-
 extension LocationsView {
+    private var mapLayer: some View {
+        @Bindable var vm = vm
+        return Map(position: $vm.mapRegion) {
+            ForEach(vm.locations) { location in
+                Annotation(location.name, coordinate: location.coordinates) {
+                    LocationMapAnnotationView()
+                        .scaleEffect(vm.mapLocation == location ? 1 : 0.7)
+                        .shadow(radius: 8)
+                        .onTapGesture {
+                            vm.showNextLocation(location: location)
+                        }
+                }
+            }
+        }
+    }
+
     private var header: some View {
         VStack {
             Button(action: vm.toggleLocationsList) {
@@ -72,46 +69,20 @@ extension LocationsView {
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 15)
     }
-}
 
-// MARK: - locationsPreviewStack
-
-extension LocationsView {
     private var locationsPreviewStack: some View {
-        VStack {
-            ZStack(alignment: .bottom) {
-                RoundedRectangle(cornerRadius: 7, style: .continuous)
-                    .foregroundStyle(Color(#colorLiteral(red: 0.8953682184, green: 0.8953682184, blue: 0.8953682184, alpha: 1)))
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 135)
-                HStack(alignment: .bottom) {
-                    LocationPreviewView(location: vm.mapLocation)
-                    Spacer()
-                    VStack {
-                        Button {}
-                            label: {
-                                Text("Learn more")
-                                    .foregroundStyle(.white)
-                                    .frame(width: 130, height: 45)
-                                    .background(.red)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                            }
-                        Button {}
-                            label: {
-                                Text("Next")
-                                    .foregroundStyle(.red)
-                                    .frame(width: 130, height: 45)
-                                    .background(Color.gray.opacity(0.5))
-                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                            }
-                    }
-                    .font(.subheadline)
-                    .fontWeight(.bold)
+        ZStack {
+            ForEach(vm.locations) { location in
+                if vm.mapLocation == location {
+                    LocationPreviewView(location: location)
+                        .shadow(color: .black.opacity(0.3), radius: 20)
+                        .padding()
+                        .transition(
+                            .asymmetric(
+                                insertion: .move(edge: .trailing),
+                                removal: .move(edge: .leading)))
                 }
-                .padding(18)
             }
         }
-        .padding()
-        .padding(.bottom, 10)
     }
 }
