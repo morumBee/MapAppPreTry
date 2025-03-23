@@ -8,18 +8,24 @@ struct LocationDetailView: View {
             VStack {
                 imageSection
                     .shadow(radius: 15)
+
                 VStack(alignment: .leading, spacing: 16) {
                     titleSection
                     Divider()
                     descriptionSection
                     Divider()
                     mapLayer
-                        .aspectRatio(1, contentMode: .fit)
                 }
                 .padding()
             }
         }
         .ignoresSafeArea()
+        .background(.ultraThinMaterial)
+        .scrollIndicators(.hidden)
+        .overlay(alignment: .topLeading) {
+            dismissButton
+                .padding()
+        }
     }
 }
 
@@ -73,10 +79,28 @@ extension LocationDetailView {
     }
 
     private var mapLayer: some View {
-        return Map(position: .constant(vm.mapRegion)) {
+        Map(position: .constant(vm.mapRegion)) {
             Annotation(vm.mapLocation.name, coordinate: vm.mapLocation.coordinates) {
                 LocationMapAnnotationView()
             }
+        }
+        .allowsHitTesting(false)
+        .aspectRatio(1, contentMode: .fit)
+        .clipShape(RoundedRectangle(cornerRadius: 15))
+    }
+
+    private var dismissButton: some View {
+        Button {
+            vm.showLearnMoreSheet.toggle()
+        }
+        label: {
+            Image(systemName: "xmark")
+                .font(.headline)
+                .padding(12)
+                .foregroundStyle(.black)
+                .background(.thinMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .shadow(radius: 4)
         }
     }
 }

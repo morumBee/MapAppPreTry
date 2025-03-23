@@ -3,7 +3,7 @@ import SwiftUI
 
 struct LocationsView: View {
     @Environment(LocationsViewModel.self) var vm
-    @State var isListExpanded: Bool = true
+    @State var isListExpanded: Bool = false
 
     var body: some View {
         @Bindable var vm = vm

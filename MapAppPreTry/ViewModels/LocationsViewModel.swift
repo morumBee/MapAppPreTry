@@ -15,7 +15,7 @@ class LocationsViewModel {
     let mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
     
     var showLocationsList: Bool = false
-    var showLearnMoreSheet: Bool = true
+    var showLearnMoreSheet: Bool = false
     
     init() {
         let locations = LocationsDataService.locations
