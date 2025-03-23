@@ -8,8 +8,11 @@ struct LocationsView: View {
     var body: some View {
         @Bindable var vm = vm
         ZStack {
-            Map(position: $vm.mapRegion)
-
+            Map(position: $vm.mapRegion) {
+                ForEach(vm.locations) { location in
+                    Marker(location.name, coordinate: location.coordinates)
+                }
+            }
             VStack(spacing: 0) {
                 header
                     .padding()
