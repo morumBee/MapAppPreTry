@@ -4,13 +4,14 @@ import SwiftUI
 struct LocationsView: View {
     @Environment(LocationsViewModel.self) var vm
     @State var isListExpanded: Bool = false
-
+    let maxWidthForIPad: CGFloat = 700
     var body: some View {
         @Bindable var vm = vm
         ZStack {
             mapLayer
             VStack(spacing: 0) {
                 header
+                    .frame(maxWidth: maxWidthForIPad)
                     .padding()
                 Spacer()
 
@@ -19,6 +20,7 @@ struct LocationsView: View {
         }
         .sheet(isPresented: $vm.showLearnMoreSheet) {
             LocationDetailView()
+                .presentationSizing(.page)
         }
     }
 }
@@ -81,6 +83,8 @@ extension LocationsView {
                     LocationPreviewView(location: location)
                         .shadow(color: .black.opacity(0.3), radius: 20)
                         .padding()
+                        .frame(maxWidth: maxWidthForIPad)
+                        .frame(maxWidth: .infinity)
                         .transition(
                             .asymmetric(
                                 insertion: .move(edge: .trailing),
